@@ -18,15 +18,17 @@ const InputArea: React.FC<InputAreaProps> = ({ onUserInput }) => {
   };
 
   return (
-    <div className='input-area'>
-      <input
-        type='text'
-        value={input}
-        onChange={handleInputChange}
-        placeholder='Type your message here...'
-      />
-      <button onClick={handleUserInput}>Send</button>
-    </div>
+    <>
+      <div className='input-area'>
+        <input
+          type='text'
+          value={input}
+          onChange={handleInputChange}
+          placeholder='Type your message here...'
+        />
+        <button onClick={handleUserInput}>Send</button>
+      </div>
+    </>
   );
 };
 

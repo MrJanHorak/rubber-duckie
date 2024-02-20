@@ -4,3 +4,17 @@
   padding: 2rem;
   text-align: center;
 }
+
+.App {
+  font-family: Arial, sans-serif;
+  background-color: rgba(84, 81, 81, 0.76);
+  color: #000;
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 400;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  border-radius: 12px;
+  padding: 2rem;
+}

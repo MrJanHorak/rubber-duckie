@@ -14,7 +14,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ conversation }) => {
     <div className='chat-window'>
       <ul>
         {conversation.map((message, i) => (
-          <li key={i}>{String(message)}</li>
+          <li key={i}>{String(message.text)}</li>
         ))}
       </ul>
     </div>

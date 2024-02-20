@@ -1,8 +1,10 @@
-/*  styling for the response area */
 .response-area {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 20px;
+  /* margin-top: 20px; */
+  background-color: white;
+  border-radius: 5px;
+  margin: 8px;
 }
