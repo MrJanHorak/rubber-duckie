@@ -1,0 +1,18 @@
+/* styling of the Rubber Duck component */
+.rubber-duck {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #000;
+  border-radius: 10px;
+  background-color: #f0f0f0;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+}
+.rubber-duck img {
+  width: 200px;
+  height: 200px;
+  margin-bottom: 20px;
+}
