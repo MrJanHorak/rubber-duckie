@@ -12,11 +12,11 @@ interface ChatWindowProps {
 const ChatWindow: React.FC<ChatWindowProps> = ({ conversation }) => {
   return (
     <div className='chat-window'>
-      <ul>
-        {conversation.map((message, i) => (
-          <li key={i}>{String(message.text)}</li>
-        ))}
-      </ul>
+      {conversation.map((message, i) => (
+        <div className='conversation-message' key={i}>
+          {String(message.text)}
+        </div>
+      ))}
     </div>
   );
 };
