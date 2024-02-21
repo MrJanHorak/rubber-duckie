@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './ListenButton.css';
 
 interface ListenButtonProps {
@@ -16,7 +16,7 @@ const ListenButton: React.FC<ListenButtonProps> = ({ onSpeechInput }) => {
     }
   };
 
-  React.useEffect(() => {
+ useEffect(() => {
     if (listening) {
       const recognition = new (window as any).webkitSpeechRecognition();
       recognition.continuous = true;

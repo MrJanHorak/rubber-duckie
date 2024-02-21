@@ -36,8 +36,7 @@ function App() {
       <Header />
       <RubberDuck />
       <ChatWindow conversation={conversation} />
-      <InputArea onUserInput={handleUserInput} />
-      <ListenButton onSpeechInput={handleSpeechInput} />
+      <InputArea onUserInput={handleUserInput} onSpeechInput={handleSpeechInput} />
       <ResponseArea response='This is a response' />
     </div>
   );

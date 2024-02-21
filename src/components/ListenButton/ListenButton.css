@@ -3,7 +3,7 @@
   color: #000;
   cursor: pointer;
   font-size: 16px;
-  padding: 10px 20px;
+  /* padding: 10px 20px; */
   text-align: center;
   text-decoration: none;
   transition: background-color 0.3s;
@@ -16,9 +16,10 @@
   color: #000;
   cursor: pointer;
   font-size: 16px;
-  padding: 10px 20px;
+  /* padding: 10px 20px; */
   transition: background-color 0.3s;
-  width: 40%;
+  width: 220px;
+  height: 60px;
 }
 /* .listen-button:hover {
   background-color: #e0e0e0;
