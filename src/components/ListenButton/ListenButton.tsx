@@ -3,28 +3,34 @@ import './ListenButton.css';
 
 interface ListenButtonProps {
   onSpeechInput: (input: string) => void;
+  stopListening: () => void;
 }
 
 const ListenButton: React.FC<ListenButtonProps> = ({ onSpeechInput }) => {
   const [listening, setListening] = React.useState(false);
 
+  const recognitionRef = React.useRef<any>(null);
+
   const handleSpeechInput = () => {
     if (listening) {
       setListening(false);
+      if (recognitionRef.current) {
+        recognitionRef.current.stop();
+      }
     } else {
-      setListening(true);
+      setListening(true)
     }
   };
 
  useEffect(() => {
     if (listening) {
-      const recognition = new (window as any).webkitSpeechRecognition();
-      recognition.continuous = true;
-      recognition.interimResults = true;
-      recognition.lang = 'en-US';
-      recognition.start();
+      recognitionRef.current = new (window as any).webkitSpeechRecognition();
+      recognitionRef.current.continuous = true;
+      recognitionRef.current.interimResults = true;
+      recognitionRef.current.lang = 'en-US';
+      recognitionRef.current.start();
 
-      recognition.onresult = (e: any) => {
+      recognitionRef.current.onresult = (e: any) => {
         const transcript = Array.from(e.results)
           .map((result: any) => result[0])
           .map((result: any) => result.transcript)

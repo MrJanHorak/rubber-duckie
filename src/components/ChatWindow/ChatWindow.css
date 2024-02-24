@@ -8,10 +8,13 @@
   text-align: left;
   width: 480px;
   overflow-y: scroll;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
 }
 
 .conversation-message {
   margin: 4px 4px 8px 4px;
+  white-space: pre-line;
 }
 
 .conversation-message:last-child {
@@ -24,7 +27,7 @@
   color: #030303;
 }
 
- .user {
+.user {
   text-align: right;
   font-weight: bold;
   color: #8c2e2e;
@@ -32,6 +35,5 @@
 
 .text {
   margin: 0px 8px 0px 8px;
+  white-space: pre-wrap;
 }
-
-

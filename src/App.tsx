@@ -17,6 +17,7 @@ import { Conversation } from './types/types';
 const generateUniqueId = () => {
   return uuidv4();
 };
+
 const sendMessageToModel = async (message: string) => {
   const response = await fetch('http://localhost:1234/v1/chat/completions', {
     method: 'POST',
@@ -28,7 +29,7 @@ const sendMessageToModel = async (message: string) => {
         {
           role: 'system',
           content:
-            'You are a speaking rubber duck for developers working on projects and coding. Always answer by asking clarifying questions to help the user think through the process, problem or program they are working on.',
+            `Please analyze the input provided by the user carefully. Your response should be analytical, focusing on understanding and clarifying the user's statements and questions. Begin your response by summarizing or repeating back the key points of the user's input to ensure accurate comprehension. Use phrases like 'If I understand you correctly,' or 'So, you are saying that' to reflect understanding. Follow this with any clarifying questions you might have to dive deeper into the user's inquiry or statement. Your goal is to engage in a reflective dialogue that helps both you and the user reach a clearer understanding of the topic at hand. Be sure to maintain a neutral and inquisitive tone throughout`,
         },
         { role: 'user', content: message },
       ],
@@ -57,6 +58,12 @@ const startConversation: Conversation = [
 function App() {
   const [conversation, setConversation] = useState(startConversation);
 
+  const stopListening = () => {
+    const recognition = new (window as any).webkitSpeechRecognition();
+    recognition.continuous = false;
+    recognition.stop();
+  };
+
   const handleUserInput = async (input: string) => {
     const newMessage = {
       id: generateUniqueId(),
@@ -70,7 +77,13 @@ function App() {
     // Call the GPT API with the user's input
     const data = await sendMessageToModel(input);
 
-    // Add the response to the conversation
+    const synth = window.speechSynthesis;
+    const utterance = new SpeechSynthesisUtterance(
+      data.choices[0].message.content
+    );
+    utterance.rate = 1.2;
+    synth.speak(utterance);
+
     const responseMessage = {
       id: generateUniqueId(),
       text: data.choices[0].message.content,
@@ -91,9 +104,19 @@ function App() {
       timestamp: Date.now(),
     };
     setConversation((prevConversation) => [...prevConversation, newMessage]);
+
     // Call the GPT API with the user's input
 
     const data = await sendMessageToModel(input);
+
+    stopListening();
+
+    // use speech synthesis to speak the response
+    const synth = window.speechSynthesis;
+    const utterance = new SpeechSynthesisUtterance(
+      data.choices[0].message.content
+    );
+    synth.speak(utterance);
 
     // Add the response to the conversation
     const responseMessage = {
@@ -116,6 +139,7 @@ function App() {
       <InputArea
         onUserInput={handleUserInput}
         onSpeechInput={handleSpeechInput}
+        stopListening={stopListening}
       />
     </div>
   );

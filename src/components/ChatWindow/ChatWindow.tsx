@@ -1,6 +1,6 @@
 // chat window component
 
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import './ChatWindow.css';
 import { Conversation } from '../../types/types';
@@ -9,6 +9,14 @@ interface ChatWindowProps {
   conversation: Conversation;
 }
 const ChatWindow: React.FC<ChatWindowProps> = ({ conversation }) => {
+  useEffect(() => {
+    const chatWindow = document.querySelector('.chat-window');
+    chatWindow?.scrollTo({
+      top: chatWindow.scrollHeight,
+      behavior: 'smooth',
+    });
+  }, [conversation]);
+
   return (
     <div className='chat-window'>
       {conversation.map((message, i) => (
@@ -20,7 +28,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ conversation }) => {
         >
           <div className='text-container'>
             {message.user === 'rubber-duck' ? '🦆' : ''}
-            <span className='text' >{String(message.text)}</span>
+            <span className='text'>{String(message.text)}</span>
             {message.user === 'user' ? '👩‍💻' : ''}
           </div>
         </div>
