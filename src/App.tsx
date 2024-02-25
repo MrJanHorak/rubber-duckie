@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 // components
@@ -6,7 +6,12 @@ import Header from './components/Header/Header';
 import ChatWindow from './components/ChatWindow/ChatWindow';
 import InputArea from './components/InputArea/InputArea';
 import RubberDuck from './components/RubberDuck/RubberDuck';
-// import ResponseArea from './components/ResponseArea/ResponseArea';
+import ChooseDucky from './components/ChooseDucky/ChooseDucky';
+import ChooseBGTile from './components/ChooseBGTile/ChooseBGTile';
+
+// assets
+import rubberDuck4 from './assets/images/rubberDucks/duck4.jpeg';
+import bg1 from './assets/images/backgroundTiles/bckgroundTile (1).png';
 
 //styles
 import './App.css';
@@ -28,8 +33,7 @@ const sendMessageToModel = async (message: string) => {
       messages: [
         {
           role: 'system',
-          content:
-            `Please analyze the input provided by the user carefully. Your response should be analytical, focusing on understanding and clarifying the user's statements and questions. Begin your response by summarizing or repeating back the key points of the user's input to ensure accurate comprehension. Use phrases like 'If I understand you correctly,' or 'So, you are saying that' to reflect understanding. Follow this with any clarifying questions you might have to dive deeper into the user's inquiry or statement. Your goal is to engage in a reflective dialogue that helps both you and the user reach a clearer understanding of the topic at hand. Be sure to maintain a neutral and inquisitive tone throughout`,
+          content: `Please analyze the input provided by the user carefully. Your response should be analytical, focusing on understanding and clarifying the user's statements and questions. Begin your response by summarizing or repeating back the key points of the user's input to ensure accurate comprehension. Use phrases like 'If I understand you correctly,' or 'So, you are saying that' to reflect understanding. Follow this with any clarifying questions you might have to dive deeper into the user's inquiry or statement. Your goal is to engage in a reflective dialogue that helps both you and the user reach a clearer understanding of the topic at hand. Be sure to maintain a neutral and inquisitive tone throughout`,
         },
         { role: 'user', content: message },
       ],
@@ -42,7 +46,7 @@ const sendMessageToModel = async (message: string) => {
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
-  console.log(response);
+
   const data = await response.json();
   return data;
 };
@@ -57,6 +61,10 @@ const startConversation: Conversation = [
 
 function App() {
   const [conversation, setConversation] = useState(startConversation);
+  const [rubberDuckImage, setRubberDuckImage] = useState(rubberDuck4);
+  const [backgroundTile, setBackgroundTile] = useState(bg1);
+  const [showChooseDucky, setShowChooseDucky] = useState(false);
+  const [showChooseBG, setShowChooseBG] = useState(false);
 
   const stopListening = () => {
     const recognition = new (window as any).webkitSpeechRecognition();
@@ -74,7 +82,6 @@ function App() {
 
     setConversation((prevConversation) => [...prevConversation, newMessage]);
 
-    // Call the GPT API with the user's input
     const data = await sendMessageToModel(input);
 
     const synth = window.speechSynthesis;
@@ -90,6 +97,7 @@ function App() {
       user: 'rubber-duck',
       timestamp: Date.now(),
     };
+
     setConversation((prevConversation) => [
       ...prevConversation,
       responseMessage,
@@ -103,44 +111,103 @@ function App() {
       user: 'user',
       timestamp: Date.now(),
     };
-    setConversation((prevConversation) => [...prevConversation, newMessage]);
 
-    // Call the GPT API with the user's input
+    setConversation((prevConversation) => [...prevConversation, newMessage]);
 
     const data = await sendMessageToModel(input);
 
     stopListening();
 
-    // use speech synthesis to speak the response
     const synth = window.speechSynthesis;
     const utterance = new SpeechSynthesisUtterance(
       data.choices[0].message.content
     );
     synth.speak(utterance);
 
-    // Add the response to the conversation
     const responseMessage = {
       id: generateUniqueId(),
       text: data.choices[0].message.content,
       user: 'rubber-duck',
       timestamp: Date.now(),
     };
+
     setConversation((prevConversation) => [
       ...prevConversation,
       responseMessage,
     ]);
   };
 
+  const handleBackgroundClick = () => {
+    setShowChooseBG(true);
+  };
+
+  useEffect(() => {}, [
+    showChooseBG,
+    showChooseDucky,
+    rubberDuckImage,
+    backgroundTile,
+  ]);
+
   return (
-    <div className='App'>
-      <Header />
-      <RubberDuck />
-      <ChatWindow conversation={conversation} />
-      <InputArea
-        onUserInput={handleUserInput}
-        onSpeechInput={handleSpeechInput}
-        stopListening={stopListening}
-      />
+    <div onClick={handleBackgroundClick} style={{ height: '100vh', background: backgroundTile }}>
+    {/* {showChooseBGTile && <ChooseBGTile />} */}
+      <div className='App'>
+        <Header />
+        {showChooseDucky && (
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+              zIndex: 100,
+            }}
+          >
+            <ChooseDucky
+              rubberDuckImage={rubberDuckImage}
+              setRubberDuckImage={setRubberDuckImage}
+              setShowChooseDucky={setShowChooseDucky}
+            />
+          </div>
+        )}
+        {showChooseBG && (
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+              zIndex: 100,
+            }}
+          >
+            <ChooseBGTile
+              backgroundTile={backgroundTile}
+              setBackgroundTile={setBackgroundTile}
+              setShowChooseBG={setShowChooseBG}
+            />
+          </div>
+        )}
+        <RubberDuck
+          rubberDuckImage={rubberDuckImage}
+          setShowChooseDucky={setShowChooseDucky}
+        />
+        <ChatWindow conversation={conversation} />
+        <InputArea
+          onUserInput={handleUserInput}
+          onSpeechInput={handleSpeechInput}
+          stopListening={stopListening}
+        />
+      </div>
     </div>
   );
 }

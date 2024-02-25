@@ -6,38 +6,27 @@ import ListenButton from '../ListenButton/ListenButton';
 interface InputAreaProps {
   onUserInput: (input: string) => void;
   onSpeechInput: (input: string) => void;
+  stopListening: () => void;
 }
 
 const InputArea: React.FC<InputAreaProps> = ({
-  onUserInput,
+  // onUserInput,
   onSpeechInput,
+  stopListening,
 }) => {
-  const [input, setInput] = React.useState('');
+  // const [input, setInput] = React.useState('');
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInput(e.target.value);
-  };
+  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setInput(e.target.value);
+  // };
 
-  const handleUserInput = () => {
-    onUserInput(input);
-    setInput('');
-  };
+  // const handleUserInput = () => {
+  //   onUserInput(input);
+  //   setInput('');
+  // };
 
   return (
-    <>
-      <div className='input-area'>
-        <input
-          type='text'
-          value={input}
-          onChange={handleInputChange}
-          placeholder='Type your message here...'
-        />
-        <div className='button-container'>
-          <ListenButton onSpeechInput={onSpeechInput} />
-          <button onClick={handleUserInput}>Send</button>
-        </div>
-      </div>
-    </>
+    <ListenButton onSpeechInput={onSpeechInput} stopListening={stopListening} />
   );
 };
 
