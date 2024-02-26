@@ -1,7 +1,7 @@
 .chat-window {
   display: flex;
   flex-direction: column;
-  height: 30vh;
+  height: 20vh;
   background-color: #f5f5f5;
   border: 1px solid #e0e0e0;
   border-radius: 5px;
@@ -36,4 +36,9 @@
 .text {
   margin: 0px 8px 0px 8px;
   white-space: pre-wrap;
+}
+#response-duck-image {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
 }

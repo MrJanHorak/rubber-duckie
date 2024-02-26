@@ -107,14 +107,24 @@ const SettingsComponent = ({
               key={index}
               src={image}
               alt='rubber duck'
-              onClick={() => handleImageClick(image)}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleImageClick(image);
+              }}
             />
           );
         })}
       </div>
       <div className='selected-image-container'>
         <img src={selectedImage} alt='rubber duck' />
-        <button onClick={handleImageSelect}>Select</button>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            handleImageSelect();
+          }}
+        >
+          Select
+        </button>
       </div>
     </div>
   );

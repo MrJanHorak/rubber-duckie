@@ -62,7 +62,7 @@ const startConversation: Conversation = [
 function App() {
   const [conversation, setConversation] = useState(startConversation);
   const [rubberDuckImage, setRubberDuckImage] = useState(rubberDuck4);
-  const [backgroundTile, setBackgroundTile] = useState(bg1);
+  const [backgroundTile, setBackgroundTile] = useState(`url(${bg1})`);
   const [showChooseDucky, setShowChooseDucky] = useState(false);
   const [showChooseBG, setShowChooseBG] = useState(false);
 
@@ -148,9 +148,23 @@ function App() {
     backgroundTile,
   ]);
 
+  useEffect(() => {
+    const handleClick = (event) => {
+      if (event.target === document.documentElement) {
+        handleBackgroundClick();     
+      }
+    };
+
+    // Add the event listener when the component mounts
+    document.addEventListener('click', handleClick);
+
+    // Remove the event listener when the component unmounts
+    return () => {
+      document.removeEventListener('click', handleClick);
+    };
+  });
+
   return (
-    <div onClick={handleBackgroundClick} style={{ height: '100vh', background: backgroundTile }}>
-    {/* {showChooseBGTile && <ChooseBGTile />} */}
       <div className='App'>
         <Header />
         {showChooseDucky && (
@@ -201,14 +215,16 @@ function App() {
           rubberDuckImage={rubberDuckImage}
           setShowChooseDucky={setShowChooseDucky}
         />
-        <ChatWindow conversation={conversation} />
+        <ChatWindow
+          conversation={conversation}
+          rubberDuckImage={rubberDuckImage}
+        />
         <InputArea
           onUserInput={handleUserInput}
           onSpeechInput={handleSpeechInput}
           stopListening={stopListening}
         />
       </div>
-    </div>
   );
 }
 

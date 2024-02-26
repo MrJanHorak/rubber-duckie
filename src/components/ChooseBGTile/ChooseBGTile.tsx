@@ -82,7 +82,8 @@ const ChooseBGTile = ({
   };
 
   const handleImageSelect = () => {
-    setBackgroundTile(selectedImage);
+    setBackgroundTile(`url('${selectedImage}')`);
+    document.documentElement.style.backgroundImage = `url('${selectedImage}')`;
     setShowChooseBG(false);
   };
 
@@ -95,14 +96,24 @@ const ChooseBGTile = ({
               key={index}
               src={image}
               alt='rubber duck'
-              onClick={() => handleImageClick(image)}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleImageClick(image);
+              }}
             />
           );
         })}
       </div>
       <div className='selected-image-container'>
         <img src={selectedImage} alt='background image' />
-        <button onClick={handleImageSelect}>Select</button>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            handleImageSelect();
+          }}
+        >
+          Select
+        </button>
       </div>
     </div>
   );

@@ -10,7 +10,13 @@ const RubberDuck = ({
   return (
     <div className='rubber-duck'>
       <div className='speech-bubble'>Explain it to me!</div>
-      <div className='settings-button' onClick={() => setShowChooseDucky(true)}>
+      <div
+        className='settings-button'
+        onClick={(event) => {
+          event.stopPropagation();
+          setShowChooseDucky(true);
+        }}
+      >
         <img src={rubberDuckImage} alt='rubber duck' />
       </div>
     </div>

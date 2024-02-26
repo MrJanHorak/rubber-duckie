@@ -7,8 +7,9 @@ import { Conversation } from '../../types/types';
 
 interface ChatWindowProps {
   conversation: Conversation;
+  rubberDuckImage: string;
 }
-const ChatWindow: React.FC<ChatWindowProps> = ({ conversation }) => {
+const ChatWindow: React.FC<ChatWindowProps> = ({ conversation, rubberDuckImage }) => {
   useEffect(() => {
     const chatWindow = document.querySelector('.chat-window');
     chatWindow?.scrollTo({
@@ -27,7 +28,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ conversation }) => {
           key={i}
         >
           <div className='text-container'>
-            {message.user === 'rubber-duck' ? '🦆' : ''}
+            {message.user === 'rubber-duck' ? <img id='response-duck-image' src={rubberDuckImage} alt={'rubber duck logo'} /> : ''}
             <span className='text'>{String(message.text)}</span>
             {message.user === 'user' ? '👩‍💻' : ''}
           </div>

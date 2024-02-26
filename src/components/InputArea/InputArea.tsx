@@ -10,23 +10,37 @@ interface InputAreaProps {
 }
 
 const InputArea: React.FC<InputAreaProps> = ({
-  // onUserInput,
+  onUserInput,
   onSpeechInput,
   stopListening,
 }) => {
-  // const [input, setInput] = React.useState('');
+  const [input, setInput] = React.useState('');
 
-  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setInput(e.target.value);
-  // };
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(e.target.value);
+  };
 
-  // const handleUserInput = () => {
-  //   onUserInput(input);
-  //   setInput('');
-  // };
+  const handleUserInput = () => {
+    onUserInput(input);
+    setInput('');
+  };
 
   return (
-    <ListenButton onSpeechInput={onSpeechInput} stopListening={stopListening} />
+    <div className='input-area'>
+      <input
+        type='text'
+        value={input}
+        onChange={handleInputChange}
+        placeholder='Type your message here...'
+      />
+      <div className='button-container'>
+        <button onClick={handleUserInput}>Send</button>
+        <ListenButton
+          onSpeechInput={onSpeechInput}
+          stopListening={stopListening}
+        />
+      </div>
+    </div>
   );
 };
 
