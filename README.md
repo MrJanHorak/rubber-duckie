@@ -2,6 +2,12 @@
 
 This is an attempt to create a GPT-wrapper app that uses speach recognition and speech synthesis to assist a developer in the developer process. The goal is to have a develeoper be able to communicate to the virtual rubber duck, making use of the rubber duck method of working through and explaining code. And then have the rubber duck send that message to a private or public GPT-Api endpoint to generate a response to repeat back to the developer what they have communicated in different words asking clarifying questions.
 
+### Personalisation
+Right clicking on the picture of the rubber duck will open up a pop up that allows the user to change the image of the rubber duck.
+
+Right clicking on the background will open a pop up that allows the user to change the background tile pattern.
+
+
 # Assets
 
 All images are created using generative AI
