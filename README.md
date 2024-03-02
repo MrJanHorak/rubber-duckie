@@ -10,10 +10,18 @@ Right clicking on the picture of the rubber duck will open up a pop up that allo
 
 Right clicking on the background will open a pop up that allows the user to change the background tile pattern.
 
+### Running the App
+
+In order to run this application on your local machine, you need to clone down this repo and then npm i, npm run dev and navigate to the localhost address provided in the terminal.
+
+To run is successfully you will need to either have a local LLM running that is set up to work as a REST API, or have a ChatGPT api key and point towards that endpoint. 
+
+To run an LLM locally you can use LM Studio.
+
 # Assets
 
 All images are created using generative AI
-The background tile is made using StableDiffusion running on a local machine. The rubber duckies are all made using Google Gemini 1.5.
+The background tile is made using StableDiffusion running on a local machine. The rubber duckies are all made using Google Gemini.
 
 Rubber Duckie sound from https://www.sfxbuzz.com/download/9-cartoon-sound-effects/133-rubber-duck-sound-effect
 
